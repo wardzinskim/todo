@@ -1,7 +1,7 @@
-﻿using ToDoApp.Domain.ToDoTask.Rules;
+﻿using ToDoApp.Domain.ToDoTasks.Rules;
 using ToDoApp.SharedKernel;
 
-namespace ToDoApp.Domain.ToDoTask;
+namespace ToDoApp.Domain.ToDoTasks;
 
 public record ToDoTaskId : ValueObject
 {

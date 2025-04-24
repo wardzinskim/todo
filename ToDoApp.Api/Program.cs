@@ -2,6 +2,7 @@ using Serilog;
 using ToDoApp.Api.Installers;
 using ToDoApp.Api.Installers.ExceptionHandlers;
 using ToDoApp.Infrastructure.Abstractions;
+using ToDoApp.Infrastructure.Database;
 
 namespace ToDoApp.Api;
 
@@ -16,7 +17,8 @@ public class Program
         });
 
         builder
-            .Install(typeof(Program).Assembly);
+            .Install(typeof(Program).Assembly)
+            .Install(typeof(ToDoAppContext).Assembly);
 
         var app = builder.Build();
 

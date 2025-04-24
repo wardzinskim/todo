@@ -1,6 +1,6 @@
 ﻿using ToDoApp.SharedKernel;
 
-namespace ToDoApp.Domain.ToDoTask.Rules;
+namespace ToDoApp.Domain.ToDoTasks.Rules;
 
 public class ToDoTaskPercentageCompletionMustBeInRange(int percentage) : IBusinessRule
 {

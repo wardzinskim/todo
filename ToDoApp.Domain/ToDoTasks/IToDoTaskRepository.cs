@@ -1,4 +1,4 @@
-﻿namespace ToDoApp.Domain.ToDoTask;
+﻿namespace ToDoApp.Domain.ToDoTasks;
 
 public interface IToDoTaskRepository
 {

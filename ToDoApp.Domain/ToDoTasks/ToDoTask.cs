@@ -1,8 +1,8 @@
-﻿using ToDoApp.Domain.ToDoTask.Events;
-using ToDoApp.Domain.ToDoTask.Rules;
+﻿using ToDoApp.Domain.ToDoTasks.Events;
+using ToDoApp.Domain.ToDoTasks.Rules;
 using ToDoApp.SharedKernel;
 
-namespace ToDoApp.Domain.ToDoTask;
+namespace ToDoApp.Domain.ToDoTasks;
 
 public class ToDoTask : Entity, IAggregateRoot
 {
