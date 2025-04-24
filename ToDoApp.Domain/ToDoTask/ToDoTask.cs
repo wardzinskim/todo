@@ -4,16 +4,13 @@ using ToDoApp.SharedKernel;
 
 namespace ToDoApp.Domain.ToDoTask;
 
-public class ToDoTask : Entity, IAggregateRoot, IAuditable
+public class ToDoTask : Entity, IAggregateRoot
 {
     public ToDoTaskId Id { get; init; }
     public string Title { get; private set; }
     public string? Description { get; private set; }
     public int PercentageCompletion { get; private set; }
     public DateTime ExpirationDateTime { get; private set; }
-
-    public DateTime CreationDate { get; }
-    public DateTime? LastUpdated { get; }
 
 
     private ToDoTask(ToDoTaskId id, string title, string? description, DateTime expirationDateTime)
