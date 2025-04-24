@@ -1,8 +1,8 @@
 ﻿using MassTransit;
-using ToDoApp.Api.IInstallers.MediatorFilters;
+using ToDoApp.Api.Installers.MediatorFilters;
 using ToDoApp.Infrastructure.Abstractions;
 
-namespace ToDoApp.Api.IInstallers;
+namespace ToDoApp.Api.Installers;
 
 public sealed class MediatorInstaller : IInstaller
 {

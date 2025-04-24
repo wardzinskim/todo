@@ -1,7 +1,7 @@
 ﻿using Carter;
 using ToDoApp.Infrastructure.Abstractions;
 
-namespace ToDoApp.Api.IInstallers;
+namespace ToDoApp.Api.Installers;
 
 public sealed class CarterInstaller : IInstaller
 {

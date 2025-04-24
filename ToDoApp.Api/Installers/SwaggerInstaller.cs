@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using ToDoApp.Infrastructure.Abstractions;
 
-namespace ToDoApp.Api.IInstallers;
+namespace ToDoApp.Api.Installers;
 
 public sealed class SwaggerInstaller : IInstaller
 {

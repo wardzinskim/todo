@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using ToDoApp.Infrastructure.Abstractions;
 
-namespace ToDoApp.Api.IInstallers.ExceptionHandlers;
+namespace ToDoApp.Api.Installers.ExceptionHandlers;
 
 public sealed class ExceptionHandlersInstaller : IInstaller
 {

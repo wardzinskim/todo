@@ -2,7 +2,7 @@
 using FluentValidation.Results;
 using MassTransit;
 
-namespace ToDoApp.Api.IInstallers.MediatorFilters;
+namespace ToDoApp.Api.Installers.MediatorFilters;
 
 internal class ValidationFilter<TMessage>(
     IEnumerable<IValidator<TMessage>> validators,

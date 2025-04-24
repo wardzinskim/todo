@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using ToDoApp.Infrastructure.Abstractions;
 
-namespace ToDoApp.Api.IInstallers;
+namespace ToDoApp.Api.Installers;
 
 public sealed class FluentValidationInstaller : IInstaller
 {

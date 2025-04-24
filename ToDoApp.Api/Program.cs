@@ -1,6 +1,6 @@
 using Serilog;
-using ToDoApp.Api.IInstallers;
-using ToDoApp.Api.IInstallers.ExceptionHandlers;
+using ToDoApp.Api.Installers;
+using ToDoApp.Api.Installers.ExceptionHandlers;
 using ToDoApp.Infrastructure.Abstractions;
 
 namespace ToDoApp.Api;

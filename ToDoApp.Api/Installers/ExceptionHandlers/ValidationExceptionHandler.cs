@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Diagnostics;
 
-namespace ToDoApp.Api.IInstallers.ExceptionHandlers;
+namespace ToDoApp.Api.Installers.ExceptionHandlers;
 
 internal sealed class ValidationExceptionHandler(IProblemDetailsService problemDetailsService) : IExceptionHandler
 {
