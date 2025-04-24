@@ -1,0 +1,23 @@
+services:
+  todoapp.api:
+    image: ${DOCKER_REGISTRY-}todoappapi
+    build:
+      context: .
+      dockerfile: ToDoApp.Api/Dockerfile
+
+  todoapp.postgres:
+    container_name: postgres
+    image: postgres:16.4-alpine3.20
+    restart: unless-stopped
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: 1qaz@WSX
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+
+volumes:
+  postgresql-data:
+    driver: local
