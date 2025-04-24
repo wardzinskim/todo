@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ToDoApp.SharedKernel\ToDoApp.SharedKernel.csproj" />
+  </ItemGroup>
+
 </Project>
