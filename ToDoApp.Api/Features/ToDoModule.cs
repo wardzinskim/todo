@@ -4,6 +4,8 @@ using MassTransit.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using ToDoApp.Api.Extensions;
 using ToDoApp.Application.ToDoTasks.CreateToDoTaskCommand;
+using ToDoApp.Application.ToDoTasks.DeleteToDoTaskCommand;
+using ToDoApp.Application.ToDoTasks.SetToDoTaskPercentageCompletionCommand;
 using ToDoApp.Application.ToDoTasks.UpdateToDoTaskCommand;
 
 namespace ToDoApp.Api.Features;
@@ -24,7 +26,27 @@ public class ToDoModule : CarterModule
             .WithOpenApi();
 
         app.MapPut("{id:guid}", UpdateToDoTask).WithName(nameof(UpdateToDoTask))
-            .Produces(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status204NoContent)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .ProducesValidationProblem()
+            .WithOpenApi();
+
+        app.MapPatch("{id:guid}", SetToDoTaskPercentageCompletion)
+            .WithName(nameof(SetToDoTaskPercentageCompletion))
+            .Produces(StatusCodes.Status204NoContent)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .ProducesValidationProblem()
+            .WithOpenApi();
+
+        app.MapPost("{id:guid}/mark-as-done", MarkToDoTaskAsDone)
+            .WithName(nameof(MarkToDoTaskAsDone))
+            .Produces(StatusCodes.Status204NoContent)
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .ProducesValidationProblem()
+            .WithOpenApi();
+
+        app.MapDelete("{id:guid}", DeleteToDoTask).WithName(nameof(DeleteToDoTask))
+            .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesValidationProblem()
             .WithOpenApi();
@@ -55,6 +77,46 @@ public class ToDoModule : CarterModule
             new UpdateToDoTaskCommand(id, request.Title, request.Description, request.ExpirationDateTime),
             cancellationToken);
 
-        return result.Match(() => Results.Ok());
+        return result.Match(Results.NoContent);
+    }
+
+    private static async Task<IResult> SetToDoTaskPercentageCompletion(
+        IMediator mediator,
+        [FromRoute] Guid id,
+        [FromBody] ToDoTaskSetPercentageCompletionRequest request,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.SendRequest(
+            new SetToDoTaskPercentageCompletionCommand(id, request.PercentageCompletion),
+            cancellationToken);
+
+        return result.Match(Results.NoContent);
+    }
+
+    private static async Task<IResult> MarkToDoTaskAsDone(
+        IMediator mediator,
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.SendRequest(
+            new SetToDoTaskPercentageCompletionCommand(id, 100),
+            cancellationToken);
+
+        return result.Match(Results.NoContent);
+    }
+
+    private static async Task<IResult> DeleteToDoTask(
+        IMediator mediator,
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.SendRequest(
+            new DeleteToDoTaskCommand(id),
+            cancellationToken);
+
+        return result.Match(Results.NoContent);
     }
 }

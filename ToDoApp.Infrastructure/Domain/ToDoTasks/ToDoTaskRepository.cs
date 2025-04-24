@@ -15,4 +15,7 @@ internal class ToDoTaskRepository(ToDoAppContext context) : IToDoTaskRepository
         => await _context.ToDoTasks
             .Where(x => x.Id == id)
             .SingleOrDefaultAsync(cancellationToken);
+
+    public void Delete(ToDoTask todoTask)
+        => _context.ToDoTasks.Remove(todoTask);
 }

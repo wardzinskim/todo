@@ -7,8 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="ToDoTasks\MarkToDoTaskAsDoneCommand\" />
-      <Folder Include="ToDoTasks\SetToDoTaskPercentageCompletionCommand\" />
       <Folder Include="ToDoTasks\ToDoTaskQuery\" />
       <Folder Include="ToDoTasks\ToToTasksQuery\" />
     </ItemGroup>

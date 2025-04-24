@@ -47,14 +47,15 @@ public class ToDoTask : Entity, IAggregateRoot
         return Result.Success();
     }
 
-    public Result MarkAsDone() => SetPercentageCompletion(100);
-
-    public Result SetPercentageCompletion(byte percentage)
+    public Result SetPercentageCompletion(int percentage)
     {
         var result = CheckRules(new ToDoTaskPercentageCompletionMustBeInRange(percentage));
         if (result.IsFailure) return result;
 
         PercentageCompletion = percentage;
+
+        if (percentage == 100)
+            AddDomainEvent(new ToDoTaskCompletedEvent(Id));
 
         return Result.Success();
     }
