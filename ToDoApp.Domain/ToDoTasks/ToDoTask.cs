@@ -38,10 +38,11 @@ public class ToDoTask : Entity, IAggregateRoot
         return new ToDoTask(todoTaskId.Value, title, description, expirationDateTime);
     }
 
-    public Result Update(string title, string? description)
+    public Result Update(string title, string? description, DateTime expirationDateTime)
     {
         Title = title;
         Description = description;
+        ExpirationDateTime = expirationDateTime;
 
         return Result.Success();
     }
