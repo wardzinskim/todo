@@ -3,6 +3,7 @@ using FluentValidation.Internal;
 using System.Globalization;
 using System.Linq.Expressions;
 using System.Reflection;
+using ToDoApp.Application.ToDoTasks.CreateToDoTaskCommand;
 using ToDoApp.Infrastructure.Abstractions;
 
 namespace ToDoApp.Api.Installers;
@@ -11,7 +12,7 @@ public sealed class FluentValidationInstaller : IInstaller
 {
     public void Install(IServiceCollection services, IConfiguration configuration, IHostEnvironment hostingEnvironment)
     {
-        // services.AddValidatorsFromAssemblyContaining<>()
+        services.AddValidatorsFromAssemblyContaining<CreateToDoTaskCommand>()
         ValidatorOptions.Global.PropertyNameResolver = CamelCasePropertyNameResolver.ResolvePropertyName;
     }
 }

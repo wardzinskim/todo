@@ -6,5 +6,23 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <Folder Include="ToDoTasks\MarkToDoTaskAsDoneCommand\" />
+      <Folder Include="ToDoTasks\SetToDoTaskPercentageCompletionCommand\" />
+      <Folder Include="ToDoTasks\ToDoTaskQuery\" />
+      <Folder Include="ToDoTasks\ToToTasksQuery\" />
+      <Folder Include="ToDoTasks\UpdateToDoTaskCommand\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.11.0" />
+      <PackageReference Include="MassTransit.Abstractions" Version="8.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ToDoApp.Domain\ToDoApp.Domain.csproj" />
+      <ProjectReference Include="..\ToDoApp.SharedKernel\ToDoApp.SharedKernel.csproj" />
+    </ItemGroup>
+
 
 </Project>
