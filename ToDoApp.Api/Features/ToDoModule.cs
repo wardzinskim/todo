@@ -5,7 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using ToDoApp.Api.Extensions;
 using ToDoApp.Application.ToDoTasks.CreateToDoTaskCommand;
 using ToDoApp.Application.ToDoTasks.DeleteToDoTaskCommand;
+using ToDoApp.Application.ToDoTasks.Model;
 using ToDoApp.Application.ToDoTasks.SetToDoTaskPercentageCompletionCommand;
+using ToDoApp.Application.ToDoTasks.ToDoTaskQuery;
+using ToDoApp.Application.ToDoTasks.ToDoTasksIncomingQuery;
+using ToDoApp.Application.ToDoTasks.ToToTasksQuery;
 using ToDoApp.Application.ToDoTasks.UpdateToDoTaskCommand;
 
 namespace ToDoApp.Api.Features;
@@ -20,12 +24,30 @@ public class ToDoModule : CarterModule
 
     public override void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("", CreateToDoTask).WithName(nameof(CreateToDoTask))
+        app.MapGet("", ToDoTasksQuery)
+            .WithName(nameof(ToDoTasksQuery))
+            .Produces<IEnumerable<ToDoTaskDTO>>()
+            .WithOpenApi();
+
+        app.MapGet("/incoming/{type}", ToDoTasksIncomingQuery)
+            .WithName(nameof(ToDoTasksIncomingQuery))
+            .Produces<IEnumerable<ToDoTaskDTO>>()
+            .WithOpenApi();
+
+        app.MapGet("{id:guid}", ToDoTaskQuery)
+            .WithName(nameof(ToDoTaskQuery))
+            .Produces<ToDoTaskDTO>()
+            .ProducesProblem(StatusCodes.Status404NotFound)
+            .WithOpenApi();
+
+        app.MapPost("", CreateToDoTask)
+            .WithName(nameof(CreateToDoTask))
             .Produces(StatusCodes.Status201Created)
             .ProducesValidationProblem()
             .WithOpenApi();
 
-        app.MapPut("{id:guid}", UpdateToDoTask).WithName(nameof(UpdateToDoTask))
+        app.MapPut("{id:guid}", UpdateToDoTask)
+            .WithName(nameof(UpdateToDoTask))
             .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status404NotFound)
             .ProducesValidationProblem()
@@ -63,8 +85,10 @@ public class ToDoModule : CarterModule
             new CreateToDoTaskCommand(request.Title, request.Description, request.ExpirationDateTime),
             cancellationToken);
 
-        return result.Match(x => Results.CreatedAtRoute("TODO", new {id = x}));
+        return result.Match(x =>
+            Results.CreatedAtRoute(nameof(Application.ToDoTasks.ToDoTaskQuery.ToDoTaskQuery), new {id = x}));
     }
+
 
     private static async Task<IResult> UpdateToDoTask(
         IMediator mediator,
@@ -118,5 +142,43 @@ public class ToDoModule : CarterModule
             cancellationToken);
 
         return result.Match(Results.NoContent);
+    }
+
+    private static async Task<IResult> ToDoTasksQuery(
+        IMediator mediator,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.SendRequest(
+            new ToDoTasksQuery(),
+            cancellationToken);
+
+        return result.Match(Results.Ok);
+    }
+
+    private static async Task<IResult> ToDoTasksIncomingQuery(
+        IMediator mediator,
+        [FromRoute] IncomingType type,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.SendRequest(
+            new ToDoTasksIncomingQuery(type),
+            cancellationToken);
+
+        return result.Match(Results.Ok);
+    }
+
+    private static async Task<IResult> ToDoTaskQuery(
+        IMediator mediator,
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken
+    )
+    {
+        var result = await mediator.SendRequest(
+            new ToDoTaskQuery(id),
+            cancellationToken);
+
+        return result.Match(Results.Ok);
     }
 }
