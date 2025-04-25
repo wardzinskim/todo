@@ -2,7 +2,7 @@ services:
   todoapp.api:
     image: ${DOCKER_REGISTRY-}todoappapi
     build:
-      context: .
+      context: ../
       dockerfile: ToDoApp.Api/Dockerfile
 
   todoapp.postgres:
