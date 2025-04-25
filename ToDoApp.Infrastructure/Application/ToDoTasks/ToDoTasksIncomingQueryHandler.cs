@@ -20,6 +20,7 @@ public class ToDoTasksIncomingQueryHandler(
         var dateRange = GetDateRange(request.Type);
 
         var result = await db.ToDoTasks
+            .Where(x => x.PercentageCompletion < 100)
             .Where(x => x.ExpirationDateTime >= dateRange.StartDate && x.ExpirationDateTime < dateRange.EndDate)
             .Select(x =>
                 new ToDoTaskDTO(x.Id, x.Title, x.Description, x.ExpirationDateTime, x.PercentageCompletion))
@@ -42,7 +43,7 @@ public class ToDoTasksIncomingQueryHandler(
                 break;
             case IncomingType.NextDay:
                 startDate = dateTimeProvider.UtcNow.Date.AddDays(1);
-                endDate = startDate.AddDays(2);
+                endDate = startDate.AddDays(1);
                 break;
             case IncomingType.CurrentWeek:
                 DateTime today = DateTime.UtcNow.Date;

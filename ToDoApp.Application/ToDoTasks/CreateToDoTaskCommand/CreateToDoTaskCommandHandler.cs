@@ -21,7 +21,7 @@ public class CreateToDoTaskCommandHandler(
     )
     {
         var result = ToDoTask.Create(idGenerator, request.Title, request.Description, request.ExpirationDateTime);
-        if (result.IsSuccess) return result.Error;
+        if (result.IsFailure) return result.Error;
 
         await repository.AddAsync(result.Value, cancellationToken);
         await unitOfWork.CommitAsync(cancellationToken);

@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using ToDoApp.Api.Installers;
 using ToDoApp.Api.Installers.ExceptionHandlers;
@@ -28,6 +29,14 @@ public class Program
         HealthChecksInstaller.Use(app);
         SwaggerInstaller.Use(app);
         CarterInstaller.Use(app);
+
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ToDoAppContext>();
+            dbContext.Database.Migrate();
+        }
+
         app.Run();
     }
 }

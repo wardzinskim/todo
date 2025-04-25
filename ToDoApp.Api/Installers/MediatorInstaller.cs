@@ -1,6 +1,8 @@
 ﻿using MassTransit;
 using ToDoApp.Api.Installers.MediatorFilters;
+using ToDoApp.Application.ToDoTasks.CreateToDoTaskCommand;
 using ToDoApp.Infrastructure.Abstractions;
+using ToDoApp.Infrastructure.Application.ToDoTasks;
 
 namespace ToDoApp.Api.Installers;
 
@@ -10,8 +12,8 @@ public sealed class MediatorInstaller : IInstaller
     {
         services.AddMediator(configure =>
         {
-            // configure.AddConsumers(typeof(CreateBudgetCommandHandler).Assembly);
-            // configure.AddConsumers(typeof(GetBudgetsQueryHandler).Assembly);
+            configure.AddConsumers(typeof(CreateToDoTaskCommand).Assembly);
+            configure.AddConsumers(typeof(ToDoTasksQueryHandler).Assembly);
 
             configure.ConfigureMediator((context, cfg) =>
             {

@@ -10,7 +10,7 @@ public class ToDoTaskPercentageCompletionMustBeInRange(int percentage) : IBusine
 
     public Result Validate()
     {
-        if (percentage is > 0 and < 100) return Result.Success();
+        if (percentage is >= 0 and <= 100) return Result.Success();
         return Result.Failure(Error);
     }
 }
